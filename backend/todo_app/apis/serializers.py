@@ -8,4 +8,4 @@ class TodosSerializer(serializers.ModelSerializer):
             'title',
             'description'
         )
-        models = models.Todo
+        model = models.Todo
