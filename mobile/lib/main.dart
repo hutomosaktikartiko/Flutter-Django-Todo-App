@@ -36,20 +36,38 @@ class HomePage extends StatelessWidget {
         shrinkWrap: true,
         itemCount: todoP.todos.length,
         itemBuilder: (BuildContext context, int index) {
-          return ListTile(
-              trailing: IconButton(
-                  icon: Icon(Icons.delete, color: Colors.red),
-                  onPressed: () {
-                    // todoP.deleteTodo(todoP.todos[index]);
-                  }),
-              title: Text(
-                todoP.todos[index].title,
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          return Dismissible(
+            key: ValueKey(todoP.todos[index].id),
+            direction: DismissDirection.startToEnd,
+            onDismissed: (direction) {},
+            confirmDismiss: (direction) {},
+            background: Container(
+              color: Colors.red,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 16.0),
+                child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Icon(
+                      Icons.delete,
+                      color: Colors.white,
+                    )),
               ),
-              subtitle: Text(
-                todoP.todos[index].description,
-                style: TextStyle(fontSize: 15, color: Colors.black),
-              ));
+            ),
+            child: ListTile(
+                // trailing: IconButton(
+                //     icon: Icon(Icons.delete, color: Colors.red),
+                //     onPressed: () {
+                //       // todoP.deleteTodo(todoP.todos[index]);
+                //     }),
+                title: Text(
+                  todoP.todos[index].title,
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                subtitle: Text(
+                  todoP.todos[index].description,
+                  style: TextStyle(fontSize: 15, color: Colors.black),
+                )),
+          );
         },
       ),
       floatingActionButton: FloatingActionButton(

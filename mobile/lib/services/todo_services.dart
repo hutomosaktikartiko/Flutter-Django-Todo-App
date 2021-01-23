@@ -12,11 +12,11 @@ class TodoProvider with ChangeNotifier {
   List<TodoModel> _todos = [];
 
   List<TodoModel> get todos {
-    return [...todos];
+    return [..._todos];
   }
 
   fetchTask() async {
-    final url = 'http://10.0.2.2:8000/apis/v1/?format=json';
+    final url = 'http://192.168.43.203:8000/apis/v1';
     final response = await http.get(url);
     if (response.statusCode == 200) {
       var data = json.decode(response.body) as List;
