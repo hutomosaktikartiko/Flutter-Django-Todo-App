@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mobile/pages/add_todo.dart';
+import 'package:mobile/pages/todo_delete.dart';
 import 'package:mobile/services/todo_services.dart';
 import 'package:provider/provider.dart';
 
@@ -40,7 +42,29 @@ class HomePage extends StatelessWidget {
             key: ValueKey(todoP.todos[index].id),
             direction: DismissDirection.startToEnd,
             onDismissed: (direction) {},
-            confirmDismiss: (direction) {},
+            confirmDismiss: (direction) async {
+              final result = await showDialog(
+                  context: context, builder: (_) => TodoDelete());
+
+              if (result) {
+                todoP.deleteTodo(todoP.todos[index]);
+                showDialog(
+                    context: context,
+                    builder: (_) => AlertDialog(
+                          title: Text('Done'),
+                          content: Text("Successfull delete!"),
+                          actions: <Widget>[
+                            FlatButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: Text("ok"))
+                          ],
+                        ));
+                return true;
+              }
+              return result;
+            },
             background: Container(
               color: Colors.red,
               child: Padding(
@@ -76,8 +100,8 @@ class HomePage extends StatelessWidget {
             size: 30,
           ),
           onPressed: () {
-            // Navigator.of(context)
-            //     .push(MaterialPageRoute(builder: (ctx) => AddTodoScreen()));
+            Navigator.of(context)
+                .push(MaterialPageRoute(builder: (ctx) => AddTodoPage()));
           }),
     );
   }
